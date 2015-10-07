@@ -1,0 +1,30 @@
+apply plugin: 'java'
+
+//Project Configuration
+version='0.0.1'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+sourceSets.main.java.srcDirs = ["src"]
+
+//Dependency Configuration
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'commons-logging:commons-logging:1.2'
+    compile 'com.healthmarketscience.jackcess:jackcess:2.1.2'
+}
+
+//Build Configuration
+jar {
+    from {
+        (configurations.compile).collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest {
+        attributes("Main-Class": "MSA2CSV" )
+    }
+}
